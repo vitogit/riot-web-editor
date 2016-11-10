@@ -9,8 +9,19 @@
   </div>
 
   <script>
+    var self = this
     login() {
       console.log("login________")
+        riot.loginService.login(function(err, response){
+          if (err){
+            console.log('Login error')
+            self.parent.authenticated = false 
+          } else {
+            console.log('Login ok')
+            self.parent.authenticated = true 
+          }
+          self.parent.update()
+        })      
     }
   </script>  
 </login>

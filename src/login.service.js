@@ -2,7 +2,6 @@ function LoginService(clientId, scope){
     //Check if the current token is valid (exists & not expired.)
     //@return {Boolean} True if token still valid (not expired)
     var isTokenValid = function() {
-      console.log("istokenvalid________")
       var token = gapi.auth.getToken();
       return (token && Date.now() < token.expires_at);
     };
@@ -27,11 +26,8 @@ function LoginService(clientId, scope){
         gapi.auth.authorize(request, function(result) {
           if (result && !result.error) {
             return done(null, result)
-            console.log("result good________"+JSON.stringify(result))
           } else {
             return done(result.error, null)
-            //var error = result ? result.error : 'Unknown authentication error';
-            console.log("error________"+JSON.stringify(error))
           }
         });
       }
@@ -40,13 +36,13 @@ function LoginService(clientId, scope){
 
     this.login = function (done) {
       var request = buildAuthRequest(false);
-      function afterAuth(err, response){
+      function afterLogin(err, response){
         if(err) {
           return done(err, null)
         }
-        return done(null.response)
+        return done(null,response)
       }
-      return executeRequest(request, afterAuth);
+      return executeRequest(request, afterLogin);
     };
 
     
@@ -62,7 +58,4 @@ function LoginService(clientId, scope){
       return executeRequest(request, afterAuth);
     };
 
-    this.showLoginDialog = function($event) {
-      console.log('show dialog');
-    };
 }

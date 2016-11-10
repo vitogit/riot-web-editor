@@ -54,12 +54,12 @@
           if (err){
             console.log('show login dialog')
             self.authenticated = false 
-            //self.update()
           } else {
             console.log('is logged in')
             self.authenticated = true 
-            //self.update()
           }
+          self.update()
+
         })
       } else {
         setTimeout(this.checkAuth, 10);
