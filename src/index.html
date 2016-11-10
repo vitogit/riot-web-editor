@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title>Note Manager</title>
+  </head>
+  <body>
+    <h1>Note Manager</h1>
+    <app/>
+
+    <script type="riot/tag" src="./app.tag"></script>
+    <script type="riot/tag" src="./login.tag"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/2.6.3/riot+compiler.min.js"></script>
+    <script src="login.service.js"></script>
+    
+    <script>
+
+      var clientId = ' '
+      var scope = ['https://www.googleapis.com/auth/drive.metadata.readonly']
+      riot.loginService = new LoginService(clientId, scope);
+      console.log("About to load GAPI");
+      
+      window.started_app = true;
+    </script>
+    <script src="gapi.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=on_gapi_loaded"></script>
+  </body>
+</html>

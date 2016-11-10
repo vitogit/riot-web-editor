@@ -1,0 +1,36 @@
+{
+  "name": "riot-web-text-editor",
+  "version": "1.0.0",
+  "description": "Simple start kit with dev server and mocha tests.",
+  "main": "index.js",
+  "scripts": {
+    "start": "light-server -c .lightserverrc",
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },  
+  "keywords": [
+    "mocha",
+    "chai",
+    "karma",
+    "riot",
+    "startkit"
+  ],
+  "author": "vitogit",
+  "license": "MIT",
+  "devDependencies": {
+    "light-server": "^1.1.7",
+    "chai": "^3.5.0",
+    "karma": "^1.3.0",
+    "karma-chai": "^0.1.0",
+    "karma-mocha": "^1.2.0",
+    "karma-mocha-reporter": "^2.2.0",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-riot": "^1.1.0",
+    "mocha": "^3.1.0",
+    "phantomjs-prebuilt": "^2.1.13",
+    "riot": "^2.6.3"
+  }
+}
