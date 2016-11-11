@@ -8,6 +8,5 @@ function on_gapi_loaded() {
 
 function init_gapi() {
   gapi.client.load('drive' , 'v3')
-  console.log("gapiclientloaded________")
   riot.mount('*')
 }

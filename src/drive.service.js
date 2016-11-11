@@ -47,39 +47,47 @@ function DriveService(){
    * @param {String} content File content
    * @return {Promise} promise that resolves to an object containing the current file metadata & content
    */
-  this.saveFile = function(metadata, content, done) {
-      var path;
-      var method;
-      console.log("metadata.id________"+metadata.id)
-      if (metadata.id) {
-        path = '/upload/drive/v2/files/' + encodeURIComponent(metadata.id);
-        method = 'PUT';
-      } else {
-        path = '/upload/drive/v2/files';
-        method = 'POST';
-      }
-      
-     var multipart = new MultiPartBuilder()
-        .append('application/json', JSON.stringify(metadata))
-        .append(metadata.mimeType, content)
-        .finish();      
-      
-      var uploadRequest = gapi.client.request({
-        path: path,
-        method: method,
-        params: {
-          uploadType: 'multipart',
-          fields: DEFAULT_FIELDS
-        },
-        headers: { 'Content-Type' : multipart.type },
-        body: multipart.body
-      });
-      
-      uploadRequest.execute(function(resp) {
-        console.log("JSON.stringify(resp)________"+JSON.stringify(resp))
-        console.log("JSON.stringify(resp)________"+JSON.stringify(resp.result))
-        var file = combineAndStoreResults(resp, content);
-        done(file)
-      });
+  this.saveFile = function(file, done) {
+    console.log("file.id________"+JSON.stringify(file.id))
+    function addContent(fileId) {
+      return gapi.client.request({
+          path: '/upload/drive/v3/files/' + fileId,
+          method: 'PATCH',
+          params: {
+            uploadType: 'media'
+          },
+          body: file.content
+        })
     }
+    
+    if (file.id) { //just update
+      addContent(file.id).then(function(resp) {
+        console.log('File just updated', resp.result)
+        done(resp.result)
+      })
+    }else { //create and update
+      gapi.client.drive.files.create({
+        mimeType: 'application/vnd.google-apps.document',
+        name: file.name,  
+        fields: 'id'
+      }).then(function(resp) {
+        addContent(resp.result.id).then(function(resp) {
+          console.log('created and added content', resp.result)
+          done(resp.result)
+        })
+      });  
+    }
+
+  }
+  
+  this.listFiles = function() {
+    var request = gapi.client.drive.files.list({
+        'pageSize': 10,
+        'fields': "nextPageToken, files(id, name)"
+    });
+
+    request.execute(function(resp) {
+      console.log("resp________"+JSON.stringify(resp))
+    });
+  }  
 }

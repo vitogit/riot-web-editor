@@ -14,12 +14,8 @@
     this.loadApi = {'drive' : 'v2'}
     this.DEFAULT_FILE = {
       content: 'this is content3',
-      metadata: {
-        id: null,
-        title: 'notes.html',
-        mimeType: 'text/html',
-        editable: true
-      }
+      id:null,
+      name: 'notes.txt'
     };
     
     this.on('mount', function() {
@@ -32,7 +28,7 @@
     
     save(event) {
       this.current_file.content = this.textEditor.value
-      riot.driveService.saveFile(this.current_file.metadata, this.current_file.content, function(file){
+      riot.driveService.saveFile(this.current_file, function(file){
         console.log("saved JSON.stringify(file________"+JSON.stringify(file))
         self.current_file = file
       })
