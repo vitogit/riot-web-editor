@@ -1,7 +1,7 @@
 {
-  "name": "riot-web-text-editor",
+  "name": "riot-web-editor",
   "version": "1.0.0",
-  "description": "Simple start kit with dev server and mocha tests.",
+  "description": "Save, load and list files with Google Drive API",
   "main": "index.js",
   "scripts": {
     "start": "light-server -c .lightserverrc",
@@ -16,7 +16,7 @@
     "chai",
     "karma",
     "riot",
-    "startkit"
+    "gdrive"
   ],
   "author": "vitogit",
   "license": "MIT",
