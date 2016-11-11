@@ -9,15 +9,14 @@
     <script type="riot/tag" src="./app.tag"></script>
     <script type="riot/tag" src="./login.tag"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/2.6.3/riot+compiler.min.js"></script>
-    <script src="multipart.js"></script>
+    <script src="config.js"></script>
     <script src="login.service.js"></script>
     <script src="drive.service.js"></script>
     
     <script>
-
-      var clientId = ' '
       var scope = ['https://www.googleapis.com/auth/drive.file']
-      riot.loginService = new LoginService(clientId, scope);
+      riot.config = new Config();
+      riot.loginService = new LoginService(riot.config.CLIENT_ID, scope);
       riot.driveService = new DriveService();
       window.started_app = true;
     </script>

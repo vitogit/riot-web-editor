@@ -11,9 +11,8 @@
     this.authenticated = true
     this.CLIENT_ID = ''
     this.SCOPES = ['']
-    this.loadApi = {'drive' : 'v2'}
     this.DEFAULT_FILE = {
-      content: 'this is content3',
+      content: '',
       id:null,
       name: 'notes.txt'
     };
