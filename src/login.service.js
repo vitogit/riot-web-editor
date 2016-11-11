@@ -48,8 +48,12 @@ function LoginService(clientId, scope){
     
     //Silently check to see if a user has already authorized the app.
     this.checkAuth = function(done) {
+      console.log("checkAuth________")
       var request = buildAuthRequest(true);
       function afterAuth(err, response){
+        console.log("afterAuth________")
+        console.log("err________"+JSON.stringify(err))
+        console.log("response________"+JSON.stringify(response))
         if(err) {
           return done(err, null)
         }

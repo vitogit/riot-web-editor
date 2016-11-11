@@ -16,11 +16,9 @@
     <script>
 
       var clientId = ' '
-      var scope = ['https://www.googleapis.com/auth/drive.metadata.readonly']
+      var scope = ['https://www.googleapis.com/auth/drive.file']
       riot.loginService = new LoginService(clientId, scope);
       riot.driveService = new DriveService();
-      console.log("About to load GAPI");
-      
       window.started_app = true;
     </script>
     <script src="gapi.js"></script>
