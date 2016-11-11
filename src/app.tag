@@ -4,7 +4,16 @@
   <a href="#" onclick={load}>load</a>
   <a href="#" onclick={list}>list</a>
 
+  
   <login authenticated={authenticated}></login>
+  
+  <div id="filesListSection">
+    <ul>
+      <li each={files}>
+        <span data-id={id}>{name}</span>
+      </li>
+    </ul>
+  </div>
   
   <script>
     var self = this
@@ -24,7 +33,7 @@
     })
     
     this.current_file = this.DEFAULT_FILE
-    
+    this.files = []
     save(event) {
       this.current_file.content = this.textEditor.value
       riot.driveService.saveFile(this.current_file, function(file){
@@ -38,6 +47,12 @@
     }
     list(event) {
       console.log('list')
+      this.files = []
+      riot.driveService.listFiles(function(files){
+        self.files = files;
+        console.log("list________"+JSON.stringify(files))
+        self.update();
+      })      
     }    
 
     checkAuth() {

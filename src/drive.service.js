@@ -80,7 +80,7 @@ function DriveService(){
 
   }
   
-  this.listFiles = function() {
+  this.listFiles = function(done) {
     var request = gapi.client.drive.files.list({
         'pageSize': 10,
         'fields': "nextPageToken, files(id, name)"
@@ -88,6 +88,7 @@ function DriveService(){
 
     request.execute(function(resp) {
       console.log("resp________"+JSON.stringify(resp))
+      done(resp.files)
     });
   }  
 }
