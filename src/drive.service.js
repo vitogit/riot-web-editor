@@ -1,5 +1,7 @@
+function DriveService(){ 
+
   // Only fetch fields that we care about
-  var DEFAULT_FIELDS = 'id,title,mimeType,userPermission,editable,copyable,fileSize';
+  var DEFAULT_FIELDS = 'id,description,fileExtension,fileSize,modifiedDate,title';
 
   /**
    * Combines metadata & content into a single object & caches the result
@@ -45,11 +47,10 @@
    * @param {String} content File content
    * @return {Promise} promise that resolves to an object containing the current file metadata & content
    */
-  this.saveFile = function(metadata, content) {
-    return googleApi.then(function(gapi) {
+  this.saveFile = function(metadata, content, done) {
       var path;
       var method;
-
+      console.log("metadata.id________"+metadata.id)
       if (metadata.id) {
         path = '/upload/drive/v2/files/' + encodeURIComponent(metadata.id);
         method = 'PUT';
@@ -57,12 +58,12 @@
         path = '/upload/drive/v2/files';
         method = 'POST';
       }
-
-      var multipart = new MultiPartBuilder()
+      
+     var multipart = new MultiPartBuilder()
         .append('application/json', JSON.stringify(metadata))
         .append(metadata.mimeType, content)
-        .finish();
-
+        .finish();      
+      
       var uploadRequest = gapi.client.request({
         path: path,
         method: method,
@@ -73,8 +74,12 @@
         headers: { 'Content-Type' : multipart.type },
         body: multipart.body
       });
-      return $q.when(uploadRequest);
-    }).then(function(response) {
-      return combineAndStoreResults(response.result, content);
-    });
-  };
+      
+      uploadRequest.execute(function(resp) {
+        console.log("JSON.stringify(resp)________"+JSON.stringify(resp))
+        console.log("JSON.stringify(resp)________"+JSON.stringify(resp.result))
+        var file = combineAndStoreResults(resp, content);
+        done(file)
+      });
+    }
+}

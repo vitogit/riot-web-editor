@@ -13,34 +13,31 @@
     this.SCOPES = ['']
     this.loadApi = {'drive' : 'v2'}
     this.DEFAULT_FILE = {
-      content: '',
+      content: 'this is content3',
       metadata: {
         id: null,
-        title: 'untitled.txt',
-        mimeType: 'text/plain',
+        title: 'notes.html',
+        mimeType: 'text/html',
         editable: true
       }
     };
+    
     this.on('mount', function() {
-      window.started_app = true;
       console.log('app mounted')
+      window.started_app = true;
       this.checkAuth()
     })
     
-    this.app_var = 'example'
+    this.current_file = this.DEFAULT_FILE
     
     save(event) {
-      console.log('save')
-      // return drive.saveFile($scope.file.metadata, $scope.file.content).then(function(result) {
-      //   redirectIfChanged(result.metadata.id);
-      //   $scope.file = result;
-      //   showMessage('File saved');
-      //   return $scope.file;
-      // }, function(err) {
-      //   showMessage('Unable to save file');
-      //   return $q.reject(err);
-      // });      
+      this.current_file.content = this.textEditor.value
+      riot.driveService.saveFile(this.current_file.metadata, this.current_file.content, function(file){
+        console.log("saved JSON.stringify(file________"+JSON.stringify(file))
+        self.current_file = file
+      })
     }
+
     load(event) {
       console.log('load')
     }
