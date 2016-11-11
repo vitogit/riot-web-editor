@@ -10,7 +10,7 @@
   <div id="filesListSection">
     <ul>
       <li each={files}>
-        <span data-id={id}>{name}</span>
+        <span data-name={name} data-id={id} onclick={load}>{name}</span>
       </li>
     </ul>
   </div>
@@ -37,14 +37,20 @@
     save(event) {
       this.current_file.content = this.textEditor.value
       riot.driveService.saveFile(this.current_file, function(file){
-        console.log("saved JSON.stringify(file________"+JSON.stringify(file))
         self.current_file = file
       })
     }
 
     load(event) {
-      console.log('load')
+      console.log('load'+JSON.stringify(event.target.dataset.id))
+      var file = {name:event.target.dataset.name, id: event.target.dataset.id }
+      riot.driveService.loadFile(file, function(file){
+        self.current_file = file
+        self.textEditor.value = self.current_file.content
+        self.update()
+      })      
     }
+    
     list(event) {
       console.log('list')
       this.files = []
