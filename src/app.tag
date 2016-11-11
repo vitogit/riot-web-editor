@@ -23,7 +23,7 @@
     this.DEFAULT_FILE = {
       content: '',
       id:null,
-      name: 'notes.txt'
+      name: 'riotwebeditor_notes.txt'
     };
     
     this.on('mount', function() {

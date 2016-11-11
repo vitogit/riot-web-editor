@@ -45,8 +45,12 @@ function DriveService(){
   
   this.listFiles = function(done) {
     var request = gapi.client.drive.files.list({
-        'pageSize': 30,
-        'fields': "nextPageToken, files(id, name)"
+        pageSize: 30,
+        corpus: 'user',
+        spaces: 'drive',
+        fields: "nextPageToken, files(id, name)",
+        q: 'name contains "riotwebeditor_"',
+        orderBy: 'modifiedTime desc'
     });
 
     request.execute(function(resp) {
